@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <label>Recipe Title</label> <input id="Title" type="text"> <br><br>
+    <label>Ingredients</label> <textarea id="Ingred"></textarea> <br><br>
+    <label>Recipe Steps</label> <textarea id="Reci"></textarea> <br><br>
+
+    <hr>
+
+    <button id="Insbtn">Add Recipe</button>
+
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyAczHj6YL3OYtxkXGYMhuZKtwuW3fL1fP8",
+          authDomain: "recipe-92ddc.firebaseapp.com",
+          databaseURL: "https://recipe-92ddc-default-rtdb.firebaseio.com",
+          projectId: "recipe-92ddc",
+          storageBucket: "recipe-92ddc.appspot.com",
+          messagingSenderId: "864761048997",
+          appId: "1:864761048997:web:e4cdd52fe0748d0b31c24c"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+
+        import {
+            getFirestore, doc, getDoc, collection, addDoc
+        }
+        from "https://www.gstatic.com/firebasejs/9.1.3/firebase-firestore.js";
+
+        const db = getFirestore();
+
+        // references
+
+        let RecipeTitle = document.getElementById("Title");
+        let Ingredients = document.getElementById("Ingred");
+        let Recipe = document.getElementById("Reci");
+
+        let insBtn = document.getElementById("Insbtn");
+        let selBtn = document.getElementById("Selbtn");
+
+        // adding document
+
+        async function AddDocument_AutoID(){
+            var ref = collection(db, "TheRecipeList");
+
+            const docRef = await addDoc (
+                ref, {
+                    TitleOfReci: Title.value,
+                    IngredientsList: Ingredients.value,
+                    RecipeMethod: Recipe.value,
+                }
+            )
+            .then(()=>{
+                alert("data added successfully");
+            })
+            .catch((error)=>{
+                alert("Unsuccessfull operation, error:" + error);
+            });
+        }
+
+        // assign events to
+
+        insBtn.addEventListener("click", AddDocument_AutoID);
+
+      </script>
+
+
+</body>
+</html>
